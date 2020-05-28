@@ -3,17 +3,19 @@ jobs:
   build:
     docker:
       - image: docker
+    environment:
+      ISSO_VERSION=0.11.1
     steps:
       - setup_remote_docker
       - run:
-          name: checkout isso repo
+          name: get isso repo
           command: |
-            git clone https://github.com/posativ/isso
+            wget https://github.com/posativ/isso/archive/${ISSO_VERSION}.tar.gz && tar xvzf ${ISSO_VERSION}.tar.gz
       - run:
           name: Build Image
           command: |
-            cd isso && docker build -t eyenx/isso . 
+            cd isso-${ISSO_VERSION} && docker build -t eyenx/isso:${ISSO_VERSION} . 
       - run:
           name: Push Image
           command: |
-            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin && docker tag eyenx/isso:latest eyenx/isso:$CIRCLE_SHA1 && docker push eyenx/isso:latest && docker push eyenx/isso:$CIRCLE_SHA1
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin && docker tag eyenx/isso:${ISSO_VERSION} eyenx/isso:latest && docker push eyenx/isso:latest && docker push eyenx/isso:${ISSO_VERSION}
