@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker
+    steps:
+      - setup_remote_docker
+      - run:
+          name: checkout isso repo
+          command: |
+            git clone https://github.com/posativ/isso
+      - run:
+          name: Build Image
+          command: |
+            cd isso && docker build -t eyenx/isso . 
+      - run:
+          name: Push Image
+          command: |
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin && docker tag eyenx/isso:latest eyenx/isso:$CIRCLE_SHA1 && docker push eyenx/isso:latest && docker push eyenx/isso:$CIRCLE_SHA1
