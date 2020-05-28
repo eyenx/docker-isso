@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: docker
     environment:
-      ISSO_VERSION=0.11.1
+      ISSO_VERSION=0.12.2
     steps:
       - setup_remote_docker
       - run:
