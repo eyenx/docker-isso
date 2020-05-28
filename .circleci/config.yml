@@ -8,7 +8,7 @@ jobs:
     steps:
       - setup_remote_docker
       - run:
-          name: get isso repo
+          name: Get isso repo
           command: |
             wget https://github.com/posativ/isso/archive/${ISSO_VERSION}.tar.gz && tar xvzf ${ISSO_VERSION}.tar.gz
       - run:
