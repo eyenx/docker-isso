@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        with:
+          repository: https://github.com/posativ/isso
       - name: build and push the image
         uses: docker/build-push-action@v1
         with:
