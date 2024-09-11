@@ -21,6 +21,7 @@ jobs:
       - name: Create metadata
         id: metadata
         uses: docker/metadata-action@v5
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           images: |
             ghcr.io/eyenx/isso
@@ -34,6 +35,7 @@ jobs:
       - name: Login to GHCR
         uses: redhat-actions/podman-login@v1
         id: login
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -59,6 +61,7 @@ jobs:
       - name: Push
         id: push
         uses: redhat-actions/push-to-registry@v2
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           image: ${{ steps.build.outputs.image }}
           tags: ${{ steps.build.outputs.tags }}
