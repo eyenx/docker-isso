@@ -21,12 +21,12 @@ jobs:
       - name: Create metadata
         id: metadata
         uses: docker/metadata-action@v5
-        if: startsWith(github.ref, 'refs/tags/v')
         with:
           images: |
             ghcr.io/eyenx/isso
           tags: |
             type=ref,event=branch
+            type=ref,event=pr
             type=schedule,pattern=nightly
             type=semver,pattern=v{{version}}
             type=semver,pattern=v{{major}}.{{minor}}
